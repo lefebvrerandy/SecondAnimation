@@ -76,6 +76,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -94,6 +95,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -115,6 +117,30 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="GameController.h" />
+    <ClInclude Include="GameLevel.h" />
+    <ClInclude Include="Graphics.h" />
+    <ClInclude Include="Level1.h" />
+    <ClInclude Include="Planet.h" />
+    <ClInclude Include="PlayerShip.h" />
+    <ClInclude Include="Ship.h" />
+    <ClInclude Include="SpriteSheet.h" />
+    <ClInclude Include="Window.h" />
+    <ClInclude Include="GameDimensions.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GameController.cpp" />
+    <ClCompile Include="GameLevel.cpp" />
+    <ClCompile Include="Graphics.cpp" />
+    <ClCompile Include="Level1.cpp" />
+    <ClCompile Include="Planet.cpp" />
+    <ClCompile Include="PlanetFactory.cpp" />
+    <ClCompile Include="PlayerShip.cpp" />
+    <ClCompile Include="Ship.cpp" />
+    <ClCompile Include="SpriteSheet.cpp" />
+    <ClCompile Include="Window.cpp" />
+    <ClCompile Include="WindowsMessageMap.cpp" />
+    <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
