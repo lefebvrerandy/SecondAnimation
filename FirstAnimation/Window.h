@@ -9,7 +9,10 @@
 * Start Date:	X
 */
 
+#define LBUTTONUP 514
+
 #include <Windows.h>
+#include <utility>
 
 class Window
 {

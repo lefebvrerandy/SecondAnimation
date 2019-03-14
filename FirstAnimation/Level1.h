@@ -1,7 +1,10 @@
 #pragma once
 #include "GameLevel.h"
 #include "GameDimensions.h"
+#include "GameBoard.h"
 #include "PlayerShip.h"
+#include "EnemyShip.h"
+#include "Planet.h"
 #include <ctime>
 #include <vector>
 #include <tuple>
@@ -10,36 +13,22 @@
 
 class Level1 : public GameLevel
 {
-	bool startTimer;
-	clock_t startedTime;
-	clock_t endingTime;
-	clock_t WaitTime;
-
-	//float ShipBaseX;
-	//float ShipBaseYSpeed;
-	//float shipStartingX;
-	//float shipStartingY;
-
-	//float shipBaseX;
-	//float shipBaseY;
+	//float _energy;
+	//float _science;
 
 	vector<pair<float, float>> centerCoords;
-	vector<tuple<int, float, float>> spawnCoords;
+	vector<tuple<Planet*, float, float>> planetCoords;
 
-	SpriteSheet* background;
-	SpriteSheet* planet1;
-	SpriteSheet* planet2;
-	SpriteSheet* planet3;
-	//SpriteSheet* shipBase;
-	//SpriteSheet* shipDetail;
+	GameBoard* _background;
+	PlayerShip* _pShip;
+	EnemyShip* _eShip;
+	Planet* _planetSpawn;
 
 
 public:
 	void Load() override;
-	wchar_t* ConvertToWCHAR_T(char* charToConvert);
 	void Unload() override;
 	void Update() override;
 	void Render() override;
-	pair<float, float> GridCenter(void);
-	void GenerateRandomPlanetLocation(vector<pair<float, float>>& centerCoords, vector<tuple<int, float, float>>& spawnLocations);
+	void ChangeUpPlanets();
 };

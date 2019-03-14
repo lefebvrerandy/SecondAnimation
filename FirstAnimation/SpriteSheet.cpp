@@ -79,7 +79,27 @@ SpriteSheet::~SpriteSheet()
 	if (bmp) bmp->Release();
 }
 
-void SpriteSheet::DrawChroma(float x, float y)
+ID2D1Effect* SpriteSheet::ChromaEffect(float r, float g, float b)
+{
+	ID2D1Effect *chromakeyEffect = NULL;
+
+	//  Create an effect to handle the chromakey
+	D2D1_VECTOR_3F vector{ r, g, b };
+	gfx->GetDeviceContext()->CreateEffect(CLSID_D2D1ChromaKey, &chromakeyEffect);
+
+	chromakeyEffect->SetValue(D2D1_CHROMAKEY_PROP_COLOR, vector);
+	chromakeyEffect->SetValue(D2D1_CHROMAKEY_PROP_TOLERANCE, 0.7f);
+	chromakeyEffect->SetValue(D2D1_CHROMAKEY_PROP_INVERT_ALPHA, false);
+	chromakeyEffect->SetValue(D2D1_CHROMAKEY_PROP_FEATHER, false);
+
+	chromakeyEffect->SetInput(1, bmp);
+
+	if (chromakeyEffect) chromakeyEffect->Release();
+
+	return chromakeyEffect;
+}
+
+ID2D1Effect* SpriteSheet::ChromaAndScaleEffect(/*Graphics* gfx,*/ float r, float g, float b)
 {
 
 	ID2D1Effect *chromakeyEffect = NULL;
@@ -88,13 +108,14 @@ void SpriteSheet::DrawChroma(float x, float y)
 	// Create an effect for scale the size of the incoming image
 	gfx->GetDeviceContext()->CreateEffect(CLSID_D2D1Scale, &scaleEffect);
 	scaleEffect->SetInput(0, bmp);
-	D2D1_VECTOR_2F vector1{ PROP_CENTER, PROP_CENTER };
+	//D2D1_VECTOR_2F vector1{ PROP_CENTER, PROP_CENTER };
+	D2D1_VECTOR_2F vector1{ -250, -150 };
 	D2D1_VECTOR_2F vector2{ PROP_SCALE, PROP_SCALE };
 	scaleEffect->SetValue(D2D1_SCALE_PROP_CENTER_POINT, vector1);
 	scaleEffect->SetValue(D2D1_SCALE_PROP_SCALE, vector2);
 
 	//  Create an effect to handle the chromakey
-	D2D1_VECTOR_3F vector{ 0.0f, 1.0f, 0.0f };
+	D2D1_VECTOR_3F vector{ r, g, b };
 	gfx->GetDeviceContext()->CreateEffect(CLSID_D2D1ChromaKey, &chromakeyEffect);
 
 	chromakeyEffect->SetValue(D2D1_CHROMAKEY_PROP_COLOR, vector);
@@ -105,13 +126,55 @@ void SpriteSheet::DrawChroma(float x, float y)
 	// Combine the two effects
 	chromakeyEffect->SetInputEffect(0, scaleEffect);
 	chromakeyEffect->SetInput(1, bmp);
-	
+
+	//if (scaleEffect) scaleEffect->Release();
+	//if (chromakeyEffect)
+	//{
+	//	chromakeyEffect->Release();
+	//}
+
+
+	return chromakeyEffect;
+}
+
+void SpriteSheet::DrawEffect(ID2D1Effect* effect, float x, float y)
+{
 	// Display the image
-	gfx->GetDeviceContext()->DrawImage(chromakeyEffect, D2D1::Point2F(static_cast<FLOAT>(x), static_cast<FLOAT>(y)));
+	gfx->GetDeviceContext()->DrawImage(effect, D2D1::Point2F(static_cast<FLOAT>(x), static_cast<FLOAT>(y)));
+	//if (effect) effect->Release();
+}
 
+ID2D1Effect* SpriteSheet::MergeEffect(ID2D1Effect* effect1, ID2D1Effect* effect2)
+{
+	ID2D1Effect* newEffect;
+	effect1->SetInputEffect(0, effect2);
+	effect1->SetInput(1, bmp);
+	newEffect = effect1;
+	return newEffect;
+}
 
-	if (scaleEffect) scaleEffect->Release();
-	if (chromakeyEffect) chromakeyEffect->Release();
+ID2D1Bitmap * SpriteSheet::GetBitmap()
+{
+	return bmp;
+}
+
+bool SpriteSheet::SetBitmap(ID2D1Bitmap * newBmp)
+{
+	bmp = newBmp;
+	return true;
+}
+
+void SpriteSheet::DrawBmp(ID2D1Bitmap * bmp)
+{
+	gfx->GetRenderTarget()->DrawBitmap(
+		bmp, //Bitmap we built from WIC
+		D2D1::RectF(0.0f, 0.0f, RESOLUTION_X, RESOLUTION_Y), //Destination rectangle
+		0.8f, //Opacity or Alpha
+		D2D1_BITMAP_INTERPOLATION_MODE::D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR,
+		//Above - the interpolation mode to use if this object is 'stretched' or 'shrunk'.
+		//Refer back to lecture notes on image/bitmap files
+		D2D1::RectF(0.0f, 0.0f, RESOLUTION_X, RESOLUTION_Y) //Source Rect
+	);
 }
 
 void SpriteSheet::Draw()

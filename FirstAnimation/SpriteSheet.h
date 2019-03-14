@@ -19,7 +19,13 @@ public:
 	~SpriteSheet();
 
 	//Draw bitmap to the render target
-	void DrawChroma(float x = 0, float y = 0);
+	void DrawEffect(ID2D1Effect* effect, float x = 0, float y = 0);
 	void Draw();
+	ID2D1Effect* ChromaEffect(float r, float g, float b);
+	ID2D1Effect* ChromaAndScaleEffect(/*Graphics* gfx,*/ float r, float g, float b);
+	ID2D1Effect* MergeEffect(ID2D1Effect* effect1, ID2D1Effect* effect2);
+	ID2D1Bitmap* GetBitmap();
+	bool SetBitmap(ID2D1Bitmap* newBmp);
+	void DrawBmp(ID2D1Bitmap* bmp);
 
 };

@@ -29,9 +29,8 @@ int CALLBACK WinMain(
 	}
 
 	GameLevel::Init(graphics);
-	ShowWindow(windowhandle, nCmdShow);
 	GameController::LoadInitialLevel(new Level1());
-
+	//GameController::LoadInitialLevel(new PlanetMenu());
 #pragma region GameLoop
 
 	MSG message;
@@ -42,7 +41,26 @@ int CALLBACK WinMain(
 			DispatchMessage(&message);
 		else
 		{
-			//Update Routine... we've moved the code for handling updates to GameController
+			// Check if the player is in a level
+			if (dynamic_cast<Level1*>(GameController::GetCurrentLevel()))
+			{
+				// Check to see if the user has clicked anywhere on screen.
+				// If so, we need to send the coordinates to the GameController 
+				// so that it can move the player ship
+				if (message.message == WM_LBUTTONDOWN)
+				{
+					POINTS coord = MAKEPOINTS(message.lParam);
+					GameController::ProcessPlayerCoordinates(coord);
+				}
+			}
+			// Check if the player is in the planet menu
+			if (dynamic_cast<PlanetMenu*>(GameController::GetCurrentLevel()))
+			{
+				if (message.message == WM_KEYDOWN)
+				{
+					GameController::ProcessSelection(message.wParam);
+				}
+			}
 			GameController::Update();
 
 			graphics->BeginDraw();

@@ -1,25 +1,21 @@
 #pragma once
-#include "SpriteSheet.h"
-#include "GameLevel.h"
-#include <vector>
+#include "SpriteObject.h"
 
-class Ship
+class Ship : public SpriteObject
 {
 private:
 	float _shipSpeed;
-	pair<float,float> _location;
-	SpriteSheet* _spriteSheet;
+	//pair<float,float> _location;
+	//SpriteSheet* _spriteSheet;
+	//ID2D1Effect* _effect;
+	//ID2D1Bitmap* _bmp;
 
 public:
 	Ship();
-	virtual ~Ship();
+	~Ship();
+
 	float GetShipSpeed();
 	bool SetShipSpeed(float newSpeed);
-	pair<float, float> GetLocation();
-	bool SetLocation(pair<float, float> newLocation);
-	wchar_t* ConvertToWCHAR_T(char* charToConvert);
-	SpriteSheet* GetShipSprite();
-	bool SetShipSprite(SpriteSheet* newSprite);
 
-//char* imageFilePath, Graphics* gfx
+	virtual pair<float, float> StartingLocation() = 0;
 };

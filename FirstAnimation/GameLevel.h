@@ -9,6 +9,10 @@ protected:
 	static Graphics* gfx;
 
 public:
+	//GameLevel(GameLevel* &second)
+	//{
+	//	this->gfx = second->gfx;
+	//}
 	static void Init(Graphics* graphics)
 	{
 		gfx = graphics;

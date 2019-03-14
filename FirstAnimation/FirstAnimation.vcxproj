@@ -73,7 +73,6 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -117,9 +116,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="EnemyShip.h" />
+    <ClInclude Include="GameBoard.h" />
     <ClInclude Include="GameController.h" />
     <ClInclude Include="GameLevel.h" />
     <ClInclude Include="Graphics.h" />
+    <ClInclude Include="PlanetMenu.h" />
+    <ClInclude Include="SpriteObject.h" />
     <ClInclude Include="Level1.h" />
     <ClInclude Include="Planet.h" />
     <ClInclude Include="PlayerShip.h" />
@@ -129,14 +132,18 @@
     <ClInclude Include="GameDimensions.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="EnemyShip.cpp" />
+    <ClCompile Include="GameBoard.cpp" />
     <ClCompile Include="GameController.cpp" />
     <ClCompile Include="GameLevel.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="Level1.cpp" />
     <ClCompile Include="Planet.cpp" />
     <ClCompile Include="PlanetFactory.cpp" />
+    <ClCompile Include="PlanetMenu.cpp" />
     <ClCompile Include="PlayerShip.cpp" />
     <ClCompile Include="Ship.cpp" />
+    <ClCompile Include="SpriteObject.cpp" />
     <ClCompile Include="SpriteSheet.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="WindowsMessageMap.cpp" />

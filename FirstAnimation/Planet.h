@@ -1,13 +1,24 @@
-#include "SpriteSheet.h"
+#pragma once
+#include "SpriteObject.h"
+#include <vector>
+#include <tuple>
 
-class Planet
+class Planet : public SpriteObject
 {
 private:
-	float _location;
+	int _energy;
+	int _science;
 
 public:
-	Planet();
+	Planet(Graphics* gfx);
 	~Planet();
 
+	float GetEnergy();
+	bool SetEnergy(float newEnergy);
+	float GetScience();
+	bool SetScience(float newScience);
+	char* GenerateRandomPlanet();
+	void GenerateRandomPlanetLocation(vector<pair<float, float>>& centerCoords, vector<tuple<Planet*, float, float>>& planetCoords, Graphics* gfx);
+	void GenerateRandomStats();
 
 };
