@@ -1,4 +1,6 @@
 #pragma once
+#pragma warning(disable : 4996)
+
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "Dwrite.lib")
 #pragma comment(lib, "dxguid.lib")

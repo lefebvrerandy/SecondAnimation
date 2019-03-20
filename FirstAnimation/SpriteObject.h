@@ -1,4 +1,6 @@
 #pragma once
+#pragma warning(disable : 4996)
+
 #include "GameLevel.h"
 #include "GameDimensions.h"
 #include "SpriteObject.h"
