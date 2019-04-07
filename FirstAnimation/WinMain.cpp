@@ -3,8 +3,13 @@
 #include "Level1.h"
 #include "GameController.h"
 #include "GameDimensions.h"
+#include <iostream>
+#include <ctime>
+#include <ratio>
+#include <chrono>
 
 Graphics* graphics;
+
 
 
 int CALLBACK WinMain(
@@ -35,6 +40,13 @@ int CALLBACK WinMain(
 
 	MSG message;
 	message.message = WM_NULL;
+
+	// Used to force the game to play at 60 fps
+	using clock = std::chrono::high_resolution_clock;
+	std::chrono::nanoseconds lag(0ns);
+	auto time_start = clock::now();
+	constexpr std::chrono::nanoseconds timestep(16ms);
+
 	while (message.message != WM_QUIT)
 	{
 		if (PeekMessage(&message, NULL, 0, 0, PM_REMOVE))
@@ -61,7 +73,19 @@ int CALLBACK WinMain(
 					GameController::ProcessSelection(message.wParam);
 				}
 			}
-			GameController::Update();
+
+			// Force updates only at 60 fps
+			auto delta_time = clock::now() - time_start;
+			time_start = clock::now();
+			lag += std::chrono::duration_cast<std::chrono::nanoseconds>(delta_time);
+
+			// We use the lag variable to handle updates at a constantant rate
+			// not a static rate
+			while (lag >= timestep)//MS_PER_UPDATE
+			{
+				lag -= timestep;
+				GameController::Update();
+			}
 
 			graphics->BeginDraw();
 			GameController::Render();
@@ -73,4 +97,17 @@ int CALLBACK WinMain(
 #pragma endregion
 	delete graphics;
 	return 0;
+}
+
+double getCurrentTime()
+{
+	using namespace std;
+	using namespace std::chrono;
+
+
+	double currentTime = 0;
+	high_resolution_clock::time_point t1 = high_resolution_clock::now();
+	//currentTime = t1;
+
+	return currentTime;
 }
