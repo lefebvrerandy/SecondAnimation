@@ -3,6 +3,7 @@
 #include "Level1.h"
 #include "GameController.h"
 #include "GameDimensions.h"
+#include "Sound.h"
 #include <iostream>
 #include <ctime>
 #include <ratio>

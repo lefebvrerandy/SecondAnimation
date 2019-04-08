@@ -149,6 +149,20 @@
     <ClCompile Include="WindowsMessageMap.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\EnemyShip.bmp" />
+    <Image Include="resources\Planet1.bmp" />
+    <Image Include="resources\Planet2.bmp" />
+    <Image Include="resources\Planet3.bmp" />
+    <Image Include="resources\SectorBackground.bmp" />
+    <Image Include="resources\ShipBase.bmp" />
+    <Image Include="resources\ShipDetail.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="resources\background_Game.wav" />
+    <Media Include="resources\collision_Death.wav" />
+    <Media Include="resources\collision_Planet.wav" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

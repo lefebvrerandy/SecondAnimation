@@ -2,6 +2,8 @@
 
 #include "Graphics.h"
 #include "SpriteSheet.h"
+#include <Windows.h>
+#pragma comment(lib, "Winmm.lib")
 
 class GameLevel
 {

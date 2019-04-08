@@ -21,6 +21,8 @@ void GameController::LoadInitialLevel(GameLevel* lev)
 	Loading = true; //This can help us avoid loading activity while rendering
 	currentLevel = lev;
 	currentLevel->Load();
+	mciSendString("open \"resources\\tos-computer-06.mp3\" type mpegvideo alias planetCollision", NULL, 0, NULL);
+	mciSendString("open \"resources\\smallexplosion3.mp3\" type mpegvideo alias enemyCollision", NULL, 0, NULL);
 	Loading = false;
 }
 
@@ -362,14 +364,18 @@ bool GameController::CollisionDetection(SpriteObject * object1, SpriteObject * o
 		{
 			if (dynamic_cast<Level1*>(currentLevel))
 			{
+				// Play sound when colliding with planet
+				mciSendString("play planetCollision from 0", NULL, 0, NULL);
 				PlanetMenu* menu = new PlanetMenu((Planet*)object2, (PlayerShip*)object1);
 				_player = (PlayerShip*)object1;
 				_planet = (Planet*)object2;
-				OpenPlanetMenu(menu);
+				OpenPlanetMenu(menu);	
 			}
 		}
 		else
 		{
+			// Play sound when colliding with enemy
+			mciSendString("play enemyCollision from 0", NULL, 0, NULL);
 			// Set the location of both player and enemy to the starting positions
 			x->SetLocation(x->StartingLocation());
 			EnemyShip* y = (EnemyShip*)object2;
@@ -379,7 +385,6 @@ bool GameController::CollisionDetection(SpriteObject * object1, SpriteObject * o
 			// Change up the planets
 			Level1* z = (Level1*)currentLevel;
 			z->ChangeUpPlanets();
-			auto i = 0;
 		}
 		return true;
 }

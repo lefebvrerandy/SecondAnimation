@@ -5,6 +5,7 @@
 #include "PlayerShip.h"
 #include "EnemyShip.h"
 #include "Planet.h"
+#include "Sound.h"
 #include <ctime>
 #include <vector>
 #include <tuple>

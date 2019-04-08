@@ -6,6 +6,8 @@
 
 void Level1::Load() 
 {
+	mciSendString("open \"resources\\ds9_infirmary.mp3\" type mpegvideo alias background", NULL, 0, NULL);
+	mciSendString("play background repeat", NULL, 0, NULL);
 	// Load the spritesheets
 	_background = new GameBoard(gfx);
 	_pShip = new PlayerShip(gfx);
